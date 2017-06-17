@@ -42,6 +42,11 @@ public final class Negociacao {
 		return this.preco * this.quantidade;
 	}
 
+	public boolean isMesmoDia(LocalDateTime outraData) {
+		return data.getDayOfMonth() == outraData.getDayOfMonth() && data.getMonth() == outraData.getMonth()
+				&& data.getYear() == outraData.getYear();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
