@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CandlestickFactory {
 
-	public Candlestick geraCandleParaData(List<Negociacao> negociacoes, LocalDateTime data) {
+	public Candlestick geraCandlestickParaData(List<Negociacao> negociacoes, LocalDateTime data) {
 		double abertura = 0.0;
 		double fechamento = 0.0;
 
@@ -22,11 +22,12 @@ public class CandlestickFactory {
 		for (Negociacao negociacao : negociacoes) {
 			volume += negociacao.getVolume();
 
-			if (negociacao.getPreco() < minimo) {
-				minimo = negociacao.getPreco();
+			double preco = negociacao.getPreco();
+			if (preco < minimo) {
+				minimo = preco;
 			}
-			if (negociacao.getPreco() > maximo) {
-				maximo = negociacao.getPreco();
+			if (preco > maximo) {
+				maximo = preco;
 			}
 
 		}
@@ -45,7 +46,7 @@ public class CandlestickFactory {
 			if (negociacao.isMesmoDia(dataAtual)) {
 				negociacoesDoDia.add(negociacao);
 			} else {
-				Candlestick candle = geraCandleParaData(negociacoesDoDia, dataAtual);
+				Candlestick candle = geraCandlestickParaData(negociacoesDoDia, dataAtual);
 				candlesticks.add(candle);
 				negociacoesDoDia = new ArrayList<>();
 				negociacoesDoDia.add(negociacao);
@@ -53,7 +54,7 @@ public class CandlestickFactory {
 			}
 		}
 		
-		Candlestick candle = geraCandleParaData(negociacoesDoDia, dataAtual);
+		Candlestick candle = geraCandlestickParaData(negociacoesDoDia, dataAtual);
 		candlesticks.add(candle);
 
 		return candlesticks;

@@ -19,7 +19,7 @@ public class CandlestickFactoryTest {
 		List<Negociacao> negociacoes = Collections.emptyList();
 
 		CandlestickFactory factory = new CandlestickFactory();
-		Candlestick candlestick = factory.geraCandleParaData(negociacoes, hoje);
+		Candlestick candlestick = factory.geraCandlestickParaData(negociacoes, hoje);
 
 		assertThat(candlestick.getAbertura(), is(0.0));
 		assertThat(candlestick.getFechamento(), is(0.0));
@@ -37,7 +37,7 @@ public class CandlestickFactoryTest {
 		List<Negociacao> negociacoes = Arrays.asList(negociacao);
 
 		CandlestickFactory factory = new CandlestickFactory();
-		Candlestick candlestick = factory.geraCandleParaData(negociacoes, hoje);
+		Candlestick candlestick = factory.geraCandlestickParaData(negociacoes, hoje);
 
 		assertThat(candlestick.getAbertura(), is(40.0));
 		assertThat(candlestick.getFechamento(), is(40.0));
@@ -58,7 +58,7 @@ public class CandlestickFactoryTest {
 		List<Negociacao> negociacoes = Arrays.asList(negociacao1, negociacao2, negociacao3, negociacao4);
 
 		CandlestickFactory factory = new CandlestickFactory();
-		Candlestick candlestick = factory.geraCandleParaData(negociacoes, hoje);
+		Candlestick candlestick = factory.geraCandlestickParaData(negociacoes, hoje);
 
 		assertThat(candlestick.getAbertura(), is(40.0));
 		assertThat(candlestick.getFechamento(), is(20.0));
