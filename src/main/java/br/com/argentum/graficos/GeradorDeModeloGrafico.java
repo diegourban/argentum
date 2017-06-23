@@ -3,7 +3,7 @@ package br.com.argentum.graficos;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
-import br.com.argentum.indicadores.MediaMovelSimples;
+import br.com.argentum.indicadores.Indicador;
 import br.com.argentum.model.SerieTemporal;
 
 public class GeradorDeModeloGrafico {
@@ -22,16 +22,14 @@ public class GeradorDeModeloGrafico {
 		this.modeloGrafico.setLegendPosition("w");
 	}
 
-	public void plotaMediaMovelSimples() {
+	public void plotaIndicador(Indicador indicador) {
 		LineChartSeries linha = new LineChartSeries();
-		linha.setLabel("MMS - Fechamento");
-		
-		MediaMovelSimples mms = new MediaMovelSimples();
+		linha.setLabel(indicador.toString());
 		
 		double valor = 0;
 		
 		for(int i = this.comeco; i <= this.fim; i++) {
-			valor = mms.calcula(i, this.serie);
+			valor = indicador.calcula(i, this.serie);
 			linha.set(i, valor);
 		}
 		

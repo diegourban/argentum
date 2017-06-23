@@ -14,7 +14,7 @@ public class MediaMovelSimplesTest {
 	@Test
 	public void sequenciaSimplesDeCandlesticks() {
 		SerieTemporal serie = GeradorDeSerie.criaSerie(1, 3, 5, 7, 2, 4);
-		MediaMovelSimples mms = new MediaMovelSimples();
+		Indicador mms = new MediaMovelSimples();
 		
 		assertThat(mms.calcula(2, serie), is(3.0));
 		assertThat(mms.calcula(3, serie), is(5.0));
