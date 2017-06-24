@@ -10,8 +10,7 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.chart.LineChartModel;
 
 import br.com.argentum.graficos.GeradorDeModeloGrafico;
-import br.com.argentum.indicadores.IndicadorAbertura;
-import br.com.argentum.indicadores.MediaMovelSimples;
+import br.com.argentum.indicadores.IndicadorFactory;
 import br.com.argentum.model.Candlestick;
 import br.com.argentum.model.CandlestickFactory;
 import br.com.argentum.model.Negociacao;
@@ -30,16 +29,29 @@ public class ArgentumBean implements Serializable {
 	private List<Negociacao> negociacoes = new ArrayList<>();
 
 	private LineChartModel modeloGrafico;
+	
+	private String nomeMedia;
+	private String nomeIndicador;
 
 	public ArgentumBean() {
+		init();
 		this.negociacoes = new ClientWebService().getNegociacoes();
+		geraGrafico();
+	}
+
+	public void geraGrafico() {
 		List<Candlestick> candlesticks = new CandlestickFactory().constroiCandles(this.negociacoes);
 		SerieTemporal serie = new SerieTemporal(candlesticks);
 
 		GeradorDeModeloGrafico geradorModelo = new GeradorDeModeloGrafico(serie, 2, serie.getUltimaPosicao());
-		geradorModelo.plotaIndicador(new IndicadorAbertura());
-		geradorModelo.plotaIndicador(new MediaMovelSimples(new IndicadorAbertura()));
+		IndicadorFactory fabrica = new IndicadorFactory(this.nomeMedia, this.nomeIndicador);
+		geradorModelo.plotaIndicador(fabrica.defineIndicador());
 		this.modeloGrafico = geradorModelo.getModeloGrafico();
+	}
+	
+	private void init() {
+		this.nomeMedia = "MediaMovelSimples";
+		this.nomeIndicador = "IndicadorFechamento";
 	}
 
 	public List<Negociacao> getNegociacoes() {
@@ -48,5 +60,21 @@ public class ArgentumBean implements Serializable {
 
 	public LineChartModel getModeloGrafico() {
 		return modeloGrafico;
+	}
+	
+	public String getNomeMedia() {
+		return nomeMedia;
+	}
+	
+	public void setNomeMedia(String nomeMedia) {
+		this.nomeMedia = nomeMedia;
+	}
+	
+	public String getNomeIndicador() {
+		return nomeIndicador;
+	}
+	
+	public void setNomeIndicador(String nomeIndicador) {
+		this.nomeIndicador = nomeIndicador;
 	}
 }
